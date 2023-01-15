@@ -3,6 +3,7 @@ use std::{borrow::Cow, ops::Deref, path::Path, sync::Arc};
 use crate::{
     entities::{
         account::Account,
+        admin::AdminDomainBlock,
         prelude::*,
         report::Report,
         status::{Emoji, Status},
@@ -55,6 +56,7 @@ impl Mastodon {
     paged_routes! {
         (get) favourites: "favourites" => Status,
         (get) blocks: "blocks" => Account,
+        (get) admin_domain_blocks: "admin/domain_blocks" => AdminDomainBlock,
         (get) domain_blocks: "domain_blocks" => String,
         (get) follow_requests: "follow_requests" => Account,
         (get) get_home_timeline: "timelines/home" => Status,
