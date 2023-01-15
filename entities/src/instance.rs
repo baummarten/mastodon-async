@@ -45,3 +45,12 @@ pub struct Stats {
     status_count: u64,
     domain_count: u64,
 }
+
+/// Extended description of the instance
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct ExtendedDescription {
+    /// A timestamp of when the extended description was last updated.
+    pub updated_at: String,
+    /// The rendered HTML content of the extended description.
+    pub content: String,
+}

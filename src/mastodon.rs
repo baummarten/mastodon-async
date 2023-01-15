@@ -76,6 +76,7 @@ impl Mastodon {
     route! {
         (delete (domain: String,)) unblock_domain: "domain_blocks" => Empty,
         (get) instance: "instance" => Instance,
+        (get) instance_extended_description: "instance/example" => ExtendedDescription,
         (get) verify_credentials: "accounts/verify_credentials" => Account,
         (post (account_id: &str, status_ids: Vec<&str>, comment: String,)) report: "reports" => Report,
         (post (domain: String,)) block_domain: "domain_blocks" => Empty,
