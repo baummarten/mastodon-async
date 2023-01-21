@@ -204,13 +204,28 @@ impl Mastodon {
 
     /// Get timeline filtered by a hashtag(eg. `#coffee`) either locally or
     /// federated.
-    pub async fn get_tagged_timeline(&self, hashtag: String, local: bool) -> Result<Vec<Status>> {
-        let base = "/api/v1/timelines/tag/";
-        let url = if local {
-            self.route(format!("{}{}?local=1", base, hashtag))
-        } else {
-            self.route(format!("{}{}", base, hashtag))
-        };
+    pub async fn get_tagged_timeline(
+        &self,
+        hashtag: String,
+        local: bool,
+        remote: bool,
+        only_media: bool,
+    ) -> Result<Vec<Status>> {
+        let mut base = format!("/api/v1/timelines/tag/{}", hashtag);
+
+        if local {
+            base.push_str("?local=1");
+        }
+
+        if remote {
+            base.push_str("?remote=1");
+        }
+
+        if only_media {
+            base.push_str("?only_media=1");
+        }
+
+        let url = self.route(base);
 
         self.get(url).await
     }
