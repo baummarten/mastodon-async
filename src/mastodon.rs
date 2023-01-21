@@ -206,12 +206,12 @@ impl Mastodon {
     /// federated.
     pub async fn get_tagged_timeline(
         &self,
-        hashtag: String,
+        hashtag: impl AsRef<str>,
         local: bool,
         remote: bool,
         only_media: bool,
     ) -> Result<Vec<Status>> {
-        let mut base = format!("/api/v1/timelines/tag/{}", hashtag);
+        let mut base = format!("/api/v1/timelines/tag/{}", hashtag.as_ref());
 
         if local {
             base.push_str("?local=1");
