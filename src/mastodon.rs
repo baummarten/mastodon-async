@@ -210,6 +210,9 @@ impl Mastodon {
         local: bool,
         remote: bool,
         only_media: bool,
+        min_id: Option<impl AsRef<str>>,
+        max_id: Option<impl AsRef<str>>,
+        limit: Option<usize>,
     ) -> Result<Vec<Status>> {
         let mut base = format!("/api/v1/timelines/tag/{}", hashtag.as_ref());
 
@@ -223,6 +226,20 @@ impl Mastodon {
 
         if only_media {
             base.push_str("?only_media=1");
+        }
+
+        if let Some(min_id) = min_id.as_ref() {
+            base.push_str("?min_id=");
+            base.push_str(min_id.as_ref());
+        }
+
+        if let Some(max_id) = max_id.as_ref() {
+            base.push_str("?max_id=");
+            base.push_str(max_id.as_ref());
+        }
+
+        if let Some(limit) = limit {
+            base.push_str(&format!("?limit={}", limit));
         }
 
         let url = self.route(base);
